@@ -114,7 +114,7 @@ dup2(pipefd[0], STDIN_FILENO);
        char *env_value = getenv(buffer + 1);
        arguments[i] = env_value ? strdup(env_value) : strdup("");
    }
-```
+   ```
 2. **Process Timeout Management** ⏱️  
    *Challenge*: Implementing timeout for foreground processes.
 
@@ -126,7 +126,7 @@ dup2(pipefd[0], STDIN_FILENO);
            foreground_pid = -1;          
        }
    }
-```
+   ```
 3. **Quote Handling** 📝  
    *Challenge*: Proper parsing of quoted strings.
 
@@ -140,7 +140,7 @@ dup2(pipefd[0], STDIN_FILENO);
            }
        }
    }
-```
+   ```
 ## Future Improvements
 
 1. **Job Control Enhancement**

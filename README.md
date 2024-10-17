@@ -1,19 +1,26 @@
-🚀 Quash Shell Implementation Report
-📖 Table of Contents
+# 🚀 Quash Shell Implementation Report 📖
 
-Overview
-Design Choices
-Code Documentation
-Implementation Challenges
-Future Improvements
+## Table of Contents
+- [Overview](#overview)
+- [Design Choices](#design-choices)
+- [Code Documentation](#code-documentation)
+- [Implementation Challenges](#implementation-challenges)
+- [Future Improvements](#future-improvements)
 
-Overview
+---
 
-Quash (Quite a Shell) is a Unix-like shell implementation written in C that provides a robust command-line interface. This project demonstrates core shell functionality including built-in commands, process management, I/O redirection, and pipe operations.
-Design Choices
+## Overview
 
-1. Core Architecture 🏗️
-mermaidCopygraph TD
+**Quash** (Quite a Shell) is a Unix-like shell implementation written in C that provides a robust command-line interface. This project demonstrates core shell functionality including built-in commands, process management, I/O redirection, and pipe operations.
+
+---
+
+## Design Choices
+
+### Core Architecture 🏗️
+
+```mermaid
+graph TD
     A[Main Loop] --> B[Command Input]
     B --> C[Token Parser]
     C --> D{Command Type}
@@ -22,6 +29,7 @@ mermaidCopygraph TD
     F --> G[Execution Handler]
     G --> H[I/O Management]
     H --> I[Process Cleanup]
+```
 2. Built-in Commands 🛠️
 CommandDescriptionImplementationcdDirectory navigationDirect system call using chdir()pwdPrint working directoryUses getcwd()echoText outputCustom implementation with variable expansionenvEnvironment variablesDirect access to environsetenvSet environment variableUses setenv()exitShell terminationClean process termination
 3. Process Management 📊

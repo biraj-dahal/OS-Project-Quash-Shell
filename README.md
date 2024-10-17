@@ -56,96 +56,116 @@ if (!is_background) {
     foreground_pid = -1;
 }
 ```
-Signal Handling
-cCopyvoid handle_sigint(int sig) {
+## Signal Handling
+
+```c
+void handle_sigint(int sig) {
     printf("\n");
     print_prompt();
     fflush(stdout);
 }
-Code Documentation
+```
+## Code Documentation
 
-1. Command Processing Pipeline
-Tokenization
-cCopyvoid tokenize_command(char *command_line, char *arguments[], int *arg_count) {
+1. **Command Processing Pipeline**
+
+### Tokenization
+
+```c
+void tokenize_command(char *command_line, char *arguments[], int *arg_count) {
     // Handles:
     // - Quoted strings ("example")
     // - Environment variables ($VAR)
     // - Command separators
     // ...
 }
-2. I/O Redirection Implementation
-File Redirection
-cCopy// Output redirection (>)
+```
+2. **I/O Redirection Implementation**
+
+### File Redirection
+
+```c
+// Output redirection (>)
 int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 dup2(fd, STDOUT_FILENO);
 
 // Input redirection (<)
 int fd = open(file, O_RDONLY);
 dup2(fd, STDIN_FILENO);
-Pipe Implementation
-cCopyint pipefd[2];
-pipe(pipefd);
+```
+### Pipe Implementation
+
+```c
+int pipefd[2];
+pipe(pipefd); 
 // First process
 dup2(pipefd[1], STDOUT_FILENO);
 // Second process
 dup2(pipefd[0], STDIN_FILENO);
-Implementation Challenges
+```
 
-1. Environment Variable Handling 🔄
-Challenge: Parsing and expanding environment variables in commands
-cCopyif (buffer[0] == '$') {
-    char *env_value = getenv(buffer + 1);
-    arguments[i] = env_value ? strdup(env_value) : strdup("");
-}
-2. Process Timeout Management ⏱️
-Challenge: Implementing timeout for foreground processes
-cCopyvoid handle_timer_alarm(int sig) {
-    if (foreground_pid > 0) {  
-        printf("\nProcess timed out. Terminating...\n");
-        kill(foreground_pid, SIGKILL); 
-        foreground_pid = -1;          
-    }
-}
-3. Quote Handling 📝
-Challenge: Proper parsing of quoted strings
-cCopywhile (*command_line != '\0' && *command_line != '\n') {
-    if (!in_quotes) {
-        if (*command_line == '"' || *command_line == '\'') {
-            in_quotes = true;
-            quote_char = *command_line;
-            // ...
-        }
-    }
-}
-Future Improvements
+## Implementation Challenges
 
-1. Job Control Enhancement
+1. **Environment Variable Handling** 🔄  
+   *Challenge*: Parsing and expanding environment variables in commands.
 
- Implement job listing functionality
- Add job suspension/resumption features
- Enhance background process management
+   ```c
+   if (buffer[0] == '$') {
+       char *env_value = getenv(buffer + 1);
+       arguments[i] = env_value ? strdup(env_value) : strdup("");
+   }
+```
+2. **Process Timeout Management** ⏱️  
+   *Challenge*: Implementing timeout for foreground processes.
 
-2. Command History
+   ```c
+   void handle_timer_alarm(int sig) {
+       if (foreground_pid > 0) {  
+           printf("\nProcess timed out. Terminating...\n");
+           kill(foreground_pid, SIGKILL); 
+           foreground_pid = -1;          
+       }
+   }
+```
+3. **Quote Handling** 📝  
+   *Challenge*: Proper parsing of quoted strings.
 
- Add command history storage
- Implement history search
- Add command line editing capabilities
+   ```c
+   while (*command_line != '\0' && *command_line != '\n') {
+       if (!in_quotes) {
+           if (*command_line == '"' || *command_line == '\'') {
+               in_quotes = true;
+               quote_char = *command_line;
+               // ...
+           }
+       }
+   }
+```
+## Future Improvements
 
-3. Shell Scripting Support
+1. **Job Control Enhancement**
+   - Implement job listing functionality
+   - Add job suspension/resumption features
+   - Enhance background process management
 
- Basic scripting capabilities
- Control structures (if/else, loops)
- Variable assignments and arithmetic
+2. **Command History**
+   - Add command history storage
+   - Implement history search
+   - Add command line editing capabilities
 
+3. **Shell Scripting Support**
+   - Basic scripting capabilities
+   - Control structures (if/else, loops)
+   - Variable assignments and arithmetic
 
+---
 
 The shell has been tested with various scenarios including:
-
-Command execution
-I/O redirection
-Pipe operations
-Signal handling
-Process management
-
+- Command execution
+- I/O redirection
+- Pipe operations
+- Signal handling
+- Process management
 
 This project was developed as part of a Howard University operating systems course implementation.
+

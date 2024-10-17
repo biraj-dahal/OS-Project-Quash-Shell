@@ -30,17 +30,32 @@ graph TD
     G --> H[I/O Management]
     H --> I[Process Cleanup]
 ```
-2. Built-in Commands 🛠️
-CommandDescriptionImplementationcdDirectory navigationDirect system call using chdir()pwdPrint working directoryUses getcwd()echoText outputCustom implementation with variable expansionenvEnvironment variablesDirect access to environsetenvSet environment variableUses setenv()exitShell terminationClean process termination
-3. Process Management 📊
-Foreground Process Handling
-cCopyif (!is_background) {
-    foreground_pid = pid;   
-    alarm(10);              // 10-second timeout
-    waitpid(pid, NULL, 0);  
-    alarm(0);               
-    foreground_pid = -1;    
+## Built-in Commands 🛠️
+
+| Command | Description               | Implementation                         |
+| ------- | ------------------------- | -------------------------------------- |
+| `cd`    | Directory navigation      | Direct system call using `chdir()`     |
+| `pwd`   | Print working directory   | Uses `getcwd()`                        |
+| `echo`  | Text output               | Custom implementation with variable expansion |
+| `env`   | Environment variables     | Direct access to `environ`             |
+| `setenv`| Set environment variable  | Uses `setenv()`                        |
+| `exit`  | Shell termination         | Clean process termination              |
+
+---
+
+## Process Management 📊
+
+### Foreground Process Handling
+
+```c
+if (!is_background) {
+    foreground_pid = pid;
+    alarm(10); // 10-second timeout
+    waitpid(pid, NULL, 0);
+    alarm(0);
+    foreground_pid = -1;
 }
+```
 Signal Handling
 cCopyvoid handle_sigint(int sig) {
     printf("\n");

@@ -11,7 +11,7 @@
 
 ## Overview
 
-**Quash** (Quite a Shell) is a Unix-like shell implementation written in C that provides a robust command-line interface. This project demonstrates core shell functionality including built-in commands, process management, I/O redirection, and pipe operations.
+**Quash** is a Unix-like shell implementation written in C that provides a robust command-line interface. This project demonstrates core shell functionality including built-in commands, process management, I/O redirection, and pipe operations.
 
 ---
 
